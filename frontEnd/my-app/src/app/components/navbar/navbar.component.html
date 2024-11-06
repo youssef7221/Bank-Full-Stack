@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="assets/fawry.png" alt="Fawry Bank Logo" style="height: 40px;"/>
+  </a>  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup"
+    aria-expanded="false"
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" routerLink="/">Home</a>
+      <a class="nav-item nav-link" routerLink="/transactions">Account</a>
+
+      <!-- Show Login & Register if the user is not logged in -->
+      <a *ngIf="!isLoggedIn()" class="nav-item nav-link" routerLink="/auth/login">Login</a>
+      <a *ngIf="!isLoggedIn()" class="nav-item nav-link" routerLink="/auth/register">Register</a>
+
+      <!-- Show Logout if the user is logged in -->
+      <button *ngIf="isLoggedIn()" (click)="logout()" class="nav-link btn btn-link">Logout</button>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    image: banking-app # Replace with your banking app's Docker image name
+    container_name: banking_app
+    ports:
+      - "8080:8080"  # Maps port 8080 on the host to port 8080 in the container
+    environment:
+      - DB_URL=jdbc:mysql://db:3306/bank?createDatabaseIfNotExist=true
+      - DB_USER=root
+      - DB_PASSWORD=root  # Replace with the actual password
+    depends_on:
+      - db  # Ensures MySQL container starts before the app
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0  # Use the MySQL version your app requires
+    container_name: mysql_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root # Same password used in the app environment
+      - MYSQL_DATABASE=bank
+    volumes:
+      - mysql-data:/var/lib/mysql  # Persists MySQL data
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

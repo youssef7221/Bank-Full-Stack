@@ -1,0 +1,56 @@
+<section class="d-flex justify-content-center align-items-center bg-light py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0" style="border-radius: 15px;">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="text-center mb-4">Create an Account</h3>
+            <p class="text-center text-muted">Join us to online banking</p>
+            <!-- Success Message -->
+            <div *ngIf="successMessage" class="alert alert-success text-center" role="alert">
+              {{ successMessage }}
+            </div>
+            <form [formGroup]="form">
+              <!-- Name Field -->
+              <div class="form-outline mb-3">
+                <label class="form-label" for="userName">Name</label>
+                <input type="text" id="userName" class="form-control form-control-lg" formControlName="userName" placeholder="Enter your name" />
+              </div>
+              <!-- Card Number Field -->
+              <div class="form-outline mb-3">
+                <label class="form-label" for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" class="form-control form-control-lg" formControlName="cardNumber" placeholder="Enter your 16-digit card number" />
+              </div>
+
+              <!-- CVV Field -->
+              <div class="form-outline mb-3">
+                <label class="form-label" for="cvv">CVV</label>
+                <input type="text" id="cvv" class="form-control form-control-lg" formControlName="cvv" placeholder="Enter your 3-digit CVV" />
+              </div>
+              <!-- Password Field -->
+              <div class="form-outline mb-3">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" id="password" class="form-control form-control-lg" formControlName="password" placeholder="Enter your password" />
+              </div>
+              <!-- Confirm Password Field -->
+              <div class="form-outline mb-3">
+                <label class="form-label" for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" class="form-control form-control-lg" formControlName="confirmPassword" placeholder="Confirm your password" />
+              </div>
+
+              <!-- Register Button -->
+              <div class="d-grid mb-3">
+                <button type="button" class="btn btn-primary btn-lg" (click)="register()">Register</button>
+              </div>
+
+              <!-- Login Redirect -->
+              <p class="text-center text-muted mt-3">Already have an account?
+                <a href="/auth/login" class="fw-bold text-primary">Login here</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

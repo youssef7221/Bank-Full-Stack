@@ -1,0 +1,87 @@
+<div id="account-area">
+  <div class="container my-4">
+    <div class="row-cols-3r">
+      <div class="col-lg-4 mb-3">
+        <div class="status bg-success p-3 rounded shadow-sm">
+          <h5>Your Balance</h5>
+          <h2>
+            <span id="current-balance">{{ currentBalance | currency:'EGP ' }}</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container my-4">
+    <form [formGroup]="transactionform">
+      <div class="row g-4">
+        <!-- Deposit Section -->
+        <div class="col-lg-6">
+          <div class="submit-area bg-light p-4 rounded shadow-sm">
+            <label for="depositAmount" class="form-label">Deposit Amount</label>
+            <input
+              id="depositAmount"
+              formControlName="depositAmount"
+              type="number"
+              class="form-control"
+              placeholder="Enter deposit amount"
+              required
+              [class.is-invalid]="transactionform.get('depositAmount')?.invalid && transactionform.get('depositAmount')?.touched"
+            />
+            <div *ngIf="transactionform.get('depositAmount')?.invalid && transactionform.get('depositAmount')?.touched" class="invalid-feedback">
+              Please enter a valid deposit amount.
+            </div>
+            <br />
+            <button (click)="onDeposit()" class="btn btn-success w-100" type="button">Deposit</button>
+          </div>
+        </div>
+
+        <!-- Withdraw Section -->
+        <div class="col-lg-6">
+          <div class="submit-area bg-light p-4 rounded shadow-sm">
+            <label for="withdrawAmount" class="form-label">Withdraw Amount</label>
+            <input
+              id="withdrawAmount"
+              formControlName="withdrawAmount"
+              type="number"
+              class="form-control"
+              placeholder="Enter withdraw amount"
+              required
+              [class.is-invalid]="transactionform.get('withdrawAmount')?.invalid && transactionform.get('withdrawAmount')?.touched"
+            />
+            <div *ngIf="transactionform.get('withdrawAmount')?.invalid && transactionform.get('withdrawAmount')?.touched" class="invalid-feedback">
+              Please enter a valid withdrawal amount.
+            </div>
+            <br />
+            <button (click)="onWithdraw()" class="btn btn-danger w-100" type="button">Withdraw</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="transactions.length > 0; else noTransactions">
+      <h2 class="mb-4">Transaction History</h2>
+      <div class="p-grid">
+        <!-- Show a limited number of transactions based on 'showAll' flag -->
+        <div class="p-col-12 p-md-6 p-lg-4" *ngFor="let transaction of limitedTransactions()">
+          <p-card header="Transaction Details" subheader="ID: {{ transaction.transactionId }}">
+            <div class="transaction-details">
+              <p><strong>Amount:</strong> {{ transaction.amount | currency:'EGP ' }}</p>
+              <p><strong>Transaction:</strong> {{ transaction.transactionalType}}</p>
+              <p><strong>Date:</strong> {{ transaction.createdAt | date:'short' }}</p>
+            </div>
+            <ng-template pTemplate="footer">
+              <small class="text-muted">Processed on {{ transaction.createdAt | date:'mediumDate' }}</small>
+            </ng-template>
+          </p-card>
+        </div>
+      </div>
+
+      <!-- Show All / Show Less button -->
+      <div class="text-center mt-4">
+        <button pButton type="button" label="{{ showAll ? 'Show Less' : 'Show All' }}" (click)="toggleShowAll()"></button>
+      </div>
+    </div>
+    <ng-template #noTransactions>
+      <p-message severity="info" text="No transactions found for this account."></p-message>
+    </ng-template>
+  </div>
+</div>
